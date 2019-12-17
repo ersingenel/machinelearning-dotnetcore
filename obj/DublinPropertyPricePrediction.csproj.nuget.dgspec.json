@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.Console\\DublinPropertyPricePrediction.Console.csproj": {}
+    "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.Console\\DublinPropertyPricePrediction.Console.csproj": {
+    "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.Console\\DublinPropertyPricePrediction.Console.csproj",
-        "projectName": "DublinPropertyPricePrediction.Console",
-        "projectPath": "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.Console\\DublinPropertyPricePrediction.Console.csproj",
+        "projectUniqueName": "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.csproj",
+        "projectName": "DublinPropertyPricePrediction",
+        "projectPath": "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.csproj",
         "packagesPath": "C:\\Users\\ersin\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\machinelearning-netcore\\DublinPropertyPricePrediction.Console\\obj\\",
+        "outputPath": "D:\\Projects\\machinelearning-netcore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -40,6 +40,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.ML": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

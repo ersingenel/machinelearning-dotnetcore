@@ -1,6 +1,7 @@
 ﻿using DublinPropertyPricePrediction.Models;
 using Microsoft.ML;
 using System;
+using System.Collections.Generic;
 
 namespace DublinPropertyPricePrediction
 {
@@ -35,12 +36,28 @@ namespace DublinPropertyPricePrediction
             // Create prediction engine
             var predictionEngine = mlContext.Model.CreatePredictionEngine<PropertyPrice, PropertyPricePrediction>(model);
 
-            var sampleData = new PropertyPrice { Year = "October-2020", Price = 0 };
-            
-            // Use model to make prediction on input data
-            var predictionResult = predictionEngine.Predict(sampleData);
+            // Prepare sample data
+            var sampleData = new List<PropertyPrice>{
+                new PropertyPrice { Year = "August-2006", Price = 133.3f },
+                new PropertyPrice { Year = "February-2012", Price = 54.5f },
+                new PropertyPrice { Year = "October-2019", Price = 106.2f },
+                new PropertyPrice { Year = "February-2020", Price = 0 },
+                new PropertyPrice { Year = "July-2020", Price = 0 },
+                new PropertyPrice { Year = "October-2020", Price = 0 }
+            };
 
-            Console.WriteLine($"Year: {sampleData.Year} Predicted Price: {predictionResult.Score}");
+
+            // Use model to make prediction on sample data
+            foreach (var sampleDataItem in sampleData)
+            {
+                var predictionResult = predictionEngine.Predict(sampleDataItem);
+                var outputText = $"{sampleDataItem.Year} → Predicted Price: {predictionResult.Score}";
+                if (sampleDataItem.Price > 0)
+                {
+                    outputText += $" Price: {sampleDataItem.Price}";
+                }
+                Console.WriteLine(outputText);
+            }
             Console.ReadKey();
         }
     }

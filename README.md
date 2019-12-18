@@ -5,4 +5,4 @@ This repository contains a simple ML.NET console application on .NET Core that p
 ## To run the application:
 
 1. Clone the repo: `git clone https://github.com/ersingenel/machinelearning-dotnetcore.git`
-2. Type `dotnet run` in a terminal window
+2. Go to `DublinPropertyPricePrediction` folder then type `dotnet run` in a terminal window

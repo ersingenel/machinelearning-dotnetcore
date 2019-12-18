@@ -46,7 +46,6 @@ namespace DublinPropertyPricePrediction
                 new PropertyPrice { Year = "October-2020", Price = 0 }
             };
 
-
             // Use model to make prediction on sample data
             foreach (var sampleDataItem in sampleData)
             {

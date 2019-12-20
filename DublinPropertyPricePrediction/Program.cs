@@ -41,9 +41,7 @@ namespace DublinPropertyPricePrediction
                 new PropertyPrice { Year = "August-2006", Price = 133.3f },
                 new PropertyPrice { Year = "February-2012", Price = 54.5f },
                 new PropertyPrice { Year = "October-2019", Price = 106.2f },
-                new PropertyPrice { Year = "February-2020", Price = 0 },
-                new PropertyPrice { Year = "July-2020", Price = 0 },
-                new PropertyPrice { Year = "October-2020", Price = 0 }
+                new PropertyPrice { Year = "February-2020", Price = 0 }
             };
 
             // Use model to make prediction on sample data

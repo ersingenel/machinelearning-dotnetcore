@@ -20,23 +20,23 @@ namespace DublinPropertyPricePrediction
                                             allowQuoting: true,
                                             allowSparse: false);
 
-            // Data process configuration with pipeline data transformations
+            // Data Process Configuration With Pipeline Data Transformations
             var dataProcessPipeline = mlContext.Transforms.Text.FeaturizeText("Year_tf", "Year")
                                       .Append(mlContext.Transforms.CopyColumns("Features", "Year_tf"))
                                       .Append(mlContext.Transforms.NormalizeMinMax("Features", "Features"))
                                       .AppendCacheCheckpoint(mlContext);
 
-            // Set the training algorithm 
+            // Set Training Algorithm 
             var trainer = mlContext.Regression.Trainers.Sdca(labelColumnName: "Price", featureColumnName: "Features");
             var trainingPipeline = dataProcessPipeline.Append(trainer);
 
             // Train Model
             var model = trainingPipeline.Fit(trainingDataView);
 
-            // Create prediction engine
+            // Create Prediction Engine
             var predictionEngine = mlContext.Model.CreatePredictionEngine<PropertyPrice, PropertyPricePrediction>(model);
 
-            // Prepare sample data
+            // Prepare Sample Data
             var sampleData = new List<PropertyPrice>{
                 new PropertyPrice { Year = "August-2006", Price = 133.3f },
                 new PropertyPrice { Year = "February-2012", Price = 54.5f },
@@ -44,7 +44,7 @@ namespace DublinPropertyPricePrediction
                 new PropertyPrice { Year = "February-2020", Price = 0 }
             };
 
-            // Use model to make prediction on sample data
+            // Make Prediction On Sample Data
             foreach (var sampleDataItem in sampleData)
             {
                 var predictionResult = predictionEngine.Predict(sampleDataItem);

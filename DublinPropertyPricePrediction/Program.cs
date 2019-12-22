@@ -7,31 +7,13 @@ namespace DublinPropertyPricePrediction
 {
     class Program
     {
-        static string TrainDataPath = @"Data/dublin-residential-property-price-index.csv";
+        static string TrainingDataPath = @"Data/dublin-residential-property-price-index.csv";
         static MLContext mlContext = new MLContext(seed: 1);
 
         static void Main(string[] args)
         {
-            // Load Data
-            var trainingDataView = mlContext.Data.LoadFromTextFile<PropertyPrice>(
-                                            path: TrainDataPath,
-                                            hasHeader: true,
-                                            separatorChar: ',',
-                                            allowQuoting: true,
-                                            allowSparse: false);
-
-            // Data Process Configuration With Pipeline Data Transformations
-            var dataProcessPipeline = mlContext.Transforms.Text.FeaturizeText("Year_tf", "Year")
-                                      .Append(mlContext.Transforms.CopyColumns("Features", "Year_tf"))
-                                      .Append(mlContext.Transforms.NormalizeMinMax("Features", "Features"))
-                                      .AppendCacheCheckpoint(mlContext);
-
-            // Set Training Algorithm 
-            var trainer = mlContext.Regression.Trainers.Sdca(labelColumnName: "Price", featureColumnName: "Features");
-            var trainingPipeline = dataProcessPipeline.Append(trainer);
-
-            // Train Model
-            var model = trainingPipeline.Fit(trainingDataView);
+            // Create Model Using Training Data  
+            var model = CreateModel();
 
             // Create Prediction Engine
             var predictionEngine = mlContext.Model.CreatePredictionEngine<PropertyPrice, PropertyPricePrediction>(model);
@@ -56,6 +38,32 @@ namespace DublinPropertyPricePrediction
                 Console.WriteLine(outputText);
             }
             Console.ReadKey();
+        }
+
+        static ITransformer CreateModel()
+        {
+            // Load Data
+            var trainingDataView = mlContext.Data.LoadFromTextFile<PropertyPrice>(
+                                            path: TrainingDataPath,
+                                            hasHeader: true,
+                                            separatorChar: ',',
+                                            allowQuoting: true,
+                                            allowSparse: false);
+
+            // Data Process Configuration With Pipeline Data Transformations
+            var dataProcessPipeline = mlContext.Transforms.Text.FeaturizeText("Year_tf", "Year")
+                                      .Append(mlContext.Transforms.CopyColumns("Features", "Year_tf"))
+                                      .Append(mlContext.Transforms.NormalizeMinMax("Features", "Features"))
+                                      .AppendCacheCheckpoint(mlContext);
+
+            // Set Training Algorithm 
+            var trainer = mlContext.Regression.Trainers.Sdca(labelColumnName: "Price", featureColumnName: "Features");
+            var trainingPipeline = dataProcessPipeline.Append(trainer);
+
+            // Train Model
+            var model = trainingPipeline.Fit(trainingDataView);
+
+            return model;
         }
     }
 }
